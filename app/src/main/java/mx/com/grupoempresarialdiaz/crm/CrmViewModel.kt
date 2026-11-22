@@ -69,6 +69,12 @@ class CrmViewModel(app: Application) : AndroidViewModel(app) {
         } catch (e: ApiException) {
             if (e.sesionExpirada) cerrarLocal()
             aviso = e.message
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            // Cualquier respuesta inesperada se muestra en pantalla en lugar de cerrar la app
+            android.util.Log.e("CrmClinica", "Error", e)
+            aviso = "Error inesperado: ${e.message ?: e.javaClass.simpleName}"
         } finally {
             cargando = false
         }

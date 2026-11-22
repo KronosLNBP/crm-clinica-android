@@ -12,10 +12,24 @@ android {
         applicationId 'mx.com.grupoempresarialdiaz.crm'
         minSdk 21
         targetSdk 35
-        versionCode 2
-        versionName '0.1.1'
+        versionCode 3
+        versionName '0.1.2'
         // Dirección del CRM (con diagonal final). Para producción cambia esta línea.
         buildConfigField 'String', 'BASE_URL', '"https://grupoempresarialdiaz.com.mx/dash/dash/"'
+    }
+
+    // Llave FIJA solo para versiones de prueba: así cada APK nuevo se instala encima del anterior.
+    // NO usar para Play Store (esa llave se crea aparte y no se sube al repo).
+    signingConfigs {
+        pruebas {
+            storeFile file('pruebas.keystore')
+            storePassword 'clinica-pruebas'
+            keyAlias 'pruebas'
+            keyPassword 'clinica-pruebas'
+        }
+    }
+    buildTypes {
+        debug { signingConfig signingConfigs.pruebas }
     }
 
     buildFeatures {
